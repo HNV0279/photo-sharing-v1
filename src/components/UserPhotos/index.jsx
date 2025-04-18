@@ -20,12 +20,7 @@ function UserPhotos() {
       </Typography>
       
       {photos.map((photo) => {
-        let imageSrc;
-        try {
-          imageSrc = require(`../../images/${photo.file_name}`);
-        } catch (e) {
-          imageSrc = "/images/fallback.jpg";
-        }
+        const imageSrc = `/images/${photo.file_name}`;
 
         return (
           <Card
@@ -44,6 +39,7 @@ function UserPhotos() {
               image={imageSrc}
               alt={`Photo ${photo.file_name}`}
               onError={(e) => {
+                e.target.onerror = null;
                 e.target.src = "/images/fallback.jpg";
               }}
             />

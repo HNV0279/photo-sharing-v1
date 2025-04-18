@@ -6,16 +6,23 @@ import "./styles.css";
 
 function TopBar() {
   const location = useLocation();
-  const { userId } = useParams();
-  let context = "PhotoApp";
+  let context = "123123";
 
-  if (location.pathname.startsWith("/users/") && userId) {
-    const user = models.userModel(userId);
-    context = user ? `${user.first_name} ${user.last_name}` : "User Details";
-  } else if (location.pathname.startsWith("/photos/") && userId) {
+  let userId = null;
+  const match = location.pathname.match(/\/(users|photos)\/([^/]+)/);
+  if (match) {
+    userId = match[2];
+  }
+
+  if (location.pathname.startsWith("/photos/") && userId) {
     const user = models.userModel(userId);
     context = user ? `Photos of ${user.first_name} ${user.last_name}` : "User Photos";
+  } else if (location.pathname.startsWith("/users/") && userId) {
+    const user = models.userModel(userId);
+    context = user ? `${user.first_name} ${user.last_name}` : "User Details";
   }
+
+
 
   return (
     <AppBar position="static">
